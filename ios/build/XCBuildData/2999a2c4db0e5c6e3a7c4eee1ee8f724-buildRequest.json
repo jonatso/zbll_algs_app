@@ -1,0 +1,59 @@
+{
+  "buildCommand" : "prepareForIndexing",
+  "configuredTargets" : [
+    {
+      "guid" : "2b63ba1f7c6c2d8ca5b13b6d930d4c9888a783a885d8b0b3beb2e9f90bde3f49"
+    }
+  ],
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos14.5",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "arm64v8",
+        "arm64",
+        "armv8"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/jonatansolheim/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/jonatansolheim/Library/Developer/Xcode/DerivedData/Runner-bgtvwalsyquhtcevcyhpazztndau/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/jonatansolheim/Library/Developer/Xcode/DerivedData/Runner-bgtvwalsyquhtcevcyhpazztndau/Index/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPad7,3",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "13.4.1",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "ENABLE_PREVIEWS" : "NO",
+          "TARGET_DEVICE_IDENTIFIER" : "4dff50df28b8f45c1a0cc0f5951a9c362bbc357e",
+          "TARGET_DEVICE_MODEL" : "iPad7,3",
+          "TARGET_DEVICE_OS_VERSION" : "13.4.1",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphoneos"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
