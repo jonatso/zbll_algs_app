@@ -54,7 +54,7 @@ class DBHelper {
     return algsets;
   }
 
-  Future<List<Case>> getCases(int algsetId) async {
+  static Future<List<Case>> getCases(int algsetId) async {
     var dbClient = await db;
     List<Map> maps = await dbClient.rawQuery(
         "SELECT * FROM cases WHERE algset_id=?",
@@ -87,7 +87,10 @@ class DBHelper {
     List<Map> maps = await dbClient.rawQuery(
         "SELECT * FROM algs WHERE case_id=? ORDER BY in_use DESC LIMIT 1", //we're only getting one alg here :D
         [case2.case_id.toString()]);
-    return Alg.fromMap(maps[0]); //making alg from first and only element :)
+    return maps.length > 0
+        ? Alg.fromMap(maps[0])
+        : Alg(0, case2.case_id, "No algs bro", "never",
+            0); //making alg from first and only element :)
   }
 
   static void setMainAlg(Alg alg) async {

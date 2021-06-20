@@ -4,14 +4,28 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'alg.dart';
 import 'dbhelper.dart';
 import 'case.dart';
+import 'algset.dart';
 
 class Cases extends StatefulWidget {
+  final int setId;
+
+  Cases(this.setId);
+
   @override
-  _CasesState createState() => _CasesState();
+  _CasesState createState() => _CasesState(setId);
 }
 
 class _CasesState extends State<Cases> {
-  Future<List<Case>> cases = DBHelper().getCases(6);
+  int setId;
+  Future<List<Case>> cases;
+  _CasesState(int setId) {
+    this.setId = setId;
+    cases = DBHelper.getCases(setId);
+  }
+
+  void setAlgSet(Algset algset) {
+    cases = DBHelper.getCases(algset.algset_id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +35,7 @@ class _CasesState extends State<Cases> {
         builder: (context, snapshot) {
           print(snapshot.data);
           if (snapshot.data == null) {
-            return Container(child: Center(child: Text("Loading cases...")));
+            return CircularProgressIndicator();
           } else {
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

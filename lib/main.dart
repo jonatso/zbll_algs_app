@@ -14,13 +14,13 @@ class ZBLLApp extends StatefulWidget {
 
 class _ZBLLAppState extends State<ZBLLApp> {
   int _selectedIndex = 0;
-  Algset _chosenSet = Algset(0, "Choose algset");
+  Algset _chosenSet;
   bool showChoice = true;
 
   List<String> _pageNames = ['Algorithms', 'Settings'];
 
-  final tabs = [
-    Cases(),
+  var tabs = [
+    Cases(1),
     Center(child: Text('Settings page')),
   ];
 
@@ -39,23 +39,31 @@ class _ZBLLAppState extends State<ZBLLApp> {
           backgroundColor: Colors.red,
           actions: [
             if (showChoice)
-              FutureBuilder(
+              FutureBuilder<List<Algset>>(
                   future: DBHelper.getAlgsets(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) return Text(snapshot.error);
 
                     if (snapshot.hasData) {
-                      return DropdownButtonFormField(
-                        decoration: InputDecoration(icon: Icon(Icons.language)),
+                      _chosenSet = snapshot.data.first;
+                      return DropdownButton<Algset>(
+                        //decoration: InputDecoration(),
+                        dropdownColor: Colors.orangeAccent,
                         value: _chosenSet,
                         items: snapshot.data
                             .map((algset) => DropdownMenuItem<Algset>(
                                   value: algset,
-                                  child: Text(algset.algset_name),
+                                  child: Text(
+                                    algset.algset_name,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ))
                             .toList(),
                         onChanged: (newValue) {
-                          setState(() => _chosenSet = newValue);
+                          setState(() {
+                            _chosenSet = newValue;
+                            tabs[0] = Cases(_chosenSet.algset_id);
+                          });
                         },
                       );
                     }
