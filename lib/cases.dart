@@ -113,6 +113,8 @@ class CasePage extends StatefulWidget {
 class _CasePageState extends State<CasePage> {
   final Case case2;
   Future<List<Alg>> algs;
+  String newAlg;
+  var newAlgController = TextEditingController();
 
   _CasePageState(this.case2);
 
@@ -159,9 +161,10 @@ class _CasePageState extends State<CasePage> {
                                 : Colors.grey,
                             iconSize: 50,
                             onPressed: () {
+                              DBHelper.setMainAlg(snapshot.data[index]);
                               setState(() {
-                                DBHelper.setMainAlg(snapshot.data[index]);
-                                //algs = DBHelper().getAlgs(case2);
+                                algs = DBHelper().getAlgs(case2);
+                                //initState();
                               });
                               Fluttertoast.showToast(
                                 msg: "You've updated your main alg",
@@ -175,6 +178,43 @@ class _CasePageState extends State<CasePage> {
                     },
                   );
                 }
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: TextField(
+              controller: newAlgController,
+              decoration: InputDecoration(
+                labelText: "Add a new alg",
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 2.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 2.0),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                ),
+              ),
+              child: Text(
+                'Add algorithm',
+                style: TextStyle(fontSize: 17.0),
+              ),
+              onPressed: () {
+                newAlg = newAlgController.text;
+                newAlgController.text = "";
+                DBHelper.addAlg(case2, newAlg);
               },
             ),
           ),

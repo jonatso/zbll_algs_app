@@ -101,4 +101,11 @@ class DBHelper {
     await dbClient.rawUpdate(
         "UPDATE algs SET in_use='0' WHERE alg_id!=?", [alg.alg_id.toString()]);
   }
+
+  static void addAlg(Case case2, String alg) async {
+    var dbClient = await db;
+    await dbClient.rawInsert(
+        "INSERT INTO algs (case_id, alg, time_added) VALUES (${case2.case_id}, '$alg', '${DateTime.now()}')");
+    print("added alg to database");
+  }
 }

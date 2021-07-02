@@ -45,26 +45,33 @@ class _ZBLLAppState extends State<ZBLLApp> {
                     if (snapshot.hasError) return Text(snapshot.error);
 
                     if (snapshot.hasData) {
-                      _chosenSet = snapshot.data.first;
-                      return DropdownButton<Algset>(
-                        //decoration: InputDecoration(),
-                        dropdownColor: Colors.orangeAccent,
-                        value: _chosenSet,
-                        items: snapshot.data
-                            .map((algset) => DropdownMenuItem<Algset>(
-                                  value: algset,
-                                  child: Text(
-                                    algset.algset_name,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            _chosenSet = newValue;
-                            tabs[0] = Cases(_chosenSet.algset_id);
-                          });
-                        },
+                      //_chosenSet = _chosenSet ?? snapshot.data.first; doesn't work help D:
+
+                      if (!snapshot.data.contains(_chosenSet))
+                        _chosenSet = snapshot
+                            .data.first; //doesn't crash but doesn't help either
+
+                      return DropdownButtonHideUnderline(
+                        child: DropdownButton<Algset>(
+                          dropdownColor: Colors.orangeAccent,
+                          iconEnabledColor: Colors.white,
+                          value: _chosenSet,
+                          items: snapshot.data
+                              .map((algset) => DropdownMenuItem<Algset>(
+                                    value: algset,
+                                    child: Text(
+                                      algset.algset_name,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              _chosenSet = newValue;
+                              tabs[0] = Cases(_chosenSet.algset_id);
+                            });
+                          },
+                        ),
                       );
                     }
                     return CircularProgressIndicator();
