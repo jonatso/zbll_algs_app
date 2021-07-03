@@ -182,7 +182,7 @@ class _CasePageState extends State<CasePage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: TextField(
               controller: newAlgController,
               decoration: InputDecoration(
@@ -197,7 +197,7 @@ class _CasePageState extends State<CasePage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(15.0),
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
@@ -214,7 +214,15 @@ class _CasePageState extends State<CasePage> {
               onPressed: () {
                 newAlg = newAlgController.text;
                 newAlgController.text = "";
-                DBHelper.addAlg(case2, newAlg);
+                setState(() {
+                  DBHelper.addAlg(case2, newAlg);
+                  algs = DBHelper().getAlgs(case2); //making the page reload??
+                });
+                Fluttertoast.showToast(
+                  msg: "New alg added for ${case2.case_name}",
+                  backgroundColor: Colors.grey.shade100,
+                  textColor: Colors.black,
+                );
               },
             ),
           ),

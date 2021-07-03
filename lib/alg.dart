@@ -23,7 +23,14 @@ class Alg {
   }
 
   Alg.fromMap(Map<String, dynamic> map) {
-    alg_id = int.parse(map['alg_id']);
+    //alg_id = int.parse(map['alg_id']);
+
+    try {
+      alg_id = int.parse(map['alg_id']);
+    } catch (e) {
+      alg_id = 0; // if alg id null :(
+    }
+
     case_id = int.parse(map['case_id']);
     alg = map['alg'];
     time_added = map['time_added'];

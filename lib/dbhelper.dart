@@ -20,7 +20,7 @@ class DBHelper {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, dbName);
     var exists = await databaseExists(path);
-    if (!exists) {
+    if (!exists || true) {
       // Should happen only the first time you launch your application
       print("Creating new copy from asset");
 
@@ -105,7 +105,11 @@ class DBHelper {
   static void addAlg(Case case2, String alg) async {
     var dbClient = await db;
     await dbClient.rawInsert(
-        "INSERT INTO algs (case_id, alg, time_added) VALUES (${case2.case_id}, '$alg', '${DateTime.now()}')");
-    print("added alg to database");
+        "INSERT INTO algs (case_id, alg, time_added, in_use) VALUES (?, ?, ?, '0')",
+        [
+          case2.case_id.toString(),
+          alg,
+          DateTime.now().toString().substring(0, 19)
+        ]);
   }
 }
