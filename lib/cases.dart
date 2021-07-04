@@ -153,24 +153,43 @@ class _CasePageState extends State<CasePage> {
                         child: ListTile(
                           title: Text(snapshot.data[index].alg),
                           subtitle: Text(snapshot.data[index].time_added),
-                          trailing: IconButton(
-                            icon: Icon(Icons.star, size: 45),
-                            color: snapshot.data[index].in_use == 1
-                                ? Colors.yellow
-                                : Colors.grey,
-                            iconSize: 50,
-                            onPressed: () {
-                              DBHelper.setMainAlg(snapshot.data[index]);
-                              setState(() {
-                                algs = DBHelper().getAlgs(case2);
-                                //initState();
-                              });
-                              Fluttertoast.showToast(
-                                msg: "You've updated your main alg",
-                                backgroundColor: Colors.grey.shade100,
-                                textColor: Colors.black,
-                              );
-                            },
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.star, size: 40),
+                                color: snapshot.data[index].in_use == 1
+                                    ? Colors.yellow
+                                    : Colors.grey,
+                                onPressed: () {
+                                  DBHelper.setMainAlg(snapshot.data[index]);
+                                  setState(() {
+                                    algs = DBHelper().getAlgs(case2);
+                                    //initState();
+                                  });
+                                  Fluttertoast.showToast(
+                                    msg: "You've updated your main algorithm",
+                                    backgroundColor: Colors.grey.shade100,
+                                    textColor: Colors.black,
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete, size: 36),
+                                color: Colors.red[800],
+                                onPressed: () {
+                                  DBHelper.deleteAlg(snapshot.data[index]);
+                                  setState(() {
+                                    algs = DBHelper().getAlgs(case2);
+                                  });
+                                  Fluttertoast.showToast(
+                                    msg: "Algorithm deleted",
+                                    backgroundColor: Colors.grey.shade100,
+                                    textColor: Colors.black,
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       );

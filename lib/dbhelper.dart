@@ -20,7 +20,7 @@ class DBHelper {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, dbName);
     var exists = await databaseExists(path);
-    if (!exists || true) {
+    if (!exists) {
       // Should happen only the first time you launch your application
       print("Creating new copy from asset");
 
@@ -100,6 +100,12 @@ class DBHelper {
 
     await dbClient.rawUpdate(
         "UPDATE algs SET in_use='0' WHERE alg_id!=?", [alg.alg_id.toString()]);
+  }
+
+  static void deleteAlg(Alg alg) async {
+    var dbClient = await db;
+    await dbClient
+        .rawDelete("DELETE FROM algs WHERE alg_id=?", [alg.alg_id.toString()]);
   }
 
   static void addAlg(Case case2, String alg) async {
