@@ -8,7 +8,7 @@ import 'algset.dart';
 
 class DBHelper {
   static Database _db;
-  static String dbName = "algs.sqlite";
+  static String dbName = "database.sqlite";
 
   static Future<Database> get db async {
     if (_db != null) return _db;
@@ -20,7 +20,7 @@ class DBHelper {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, dbName);
     var exists = await databaseExists(path);
-    if (!exists) {
+    if (!exists || true) {
       // Should happen only the first time you launch your application
       print("Creating new copy from asset");
 
@@ -95,27 +95,22 @@ class DBHelper {
 
   static void setMainAlg(Alg alg) async {
     var dbClient = await db;
-    await dbClient.rawUpdate(
-        "UPDATE algs SET in_use='1' WHERE alg_id=?", [alg.alg_id.toString()]);
+    await dbClient
+        .rawUpdate("UPDATE algs SET in_use=1 WHERE alg_id=?", [alg.alg_id]);
 
-    await dbClient.rawUpdate(
-        "UPDATE algs SET in_use='0' WHERE alg_id!=?", [alg.alg_id.toString()]);
+    await dbClient
+        .rawUpdate("UPDATE algs SET in_use=0 WHERE alg_id!=?", [alg.alg_id]);
   }
 
   static void deleteAlg(Alg alg) async {
     var dbClient = await db;
-    await dbClient
-        .rawDelete("DELETE FROM algs WHERE alg_id=?", [alg.alg_id.toString()]);
+    await dbClient.rawDelete("DELETE FROM algs WHERE alg_id=?", [alg.alg_id]);
   }
 
   static void addAlg(Case case2, String alg) async {
     var dbClient = await db;
     await dbClient.rawInsert(
-        "INSERT INTO algs (case_id, alg, time_added, in_use) VALUES (?, ?, ?, '0')",
-        [
-          case2.case_id.toString(),
-          alg,
-          DateTime.now().toString().substring(0, 19)
-        ]);
+        "INSERT INTO algs (case_id, alg, time_added, in_use) VALUES (?, ?, ?, 0)",
+        [case2.case_id, alg, DateTime.now().toString().substring(0, 19)]);
   }
 }

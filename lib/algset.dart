@@ -13,7 +13,7 @@ class Algset {
   }
 
   Algset.fromMap(Map<String, dynamic> map) {
-    algset_id = int.parse(map['algset_id']);
+    algset_id = map['algset_id'];
 
     algset_name = map['algset_name'];
   }

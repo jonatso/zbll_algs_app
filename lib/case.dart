@@ -22,9 +22,9 @@ class Case {
   Case.fromMap(Map<String, dynamic> map) {
     //case_id = map['case_id']; //hvorfor får vi string og ikke int inn???
 
-    case_id = int.parse(map['case_id']);
+    case_id = map['case_id'];
 
-    algset_id = int.parse(map['algset_id']);
+    algset_id = map['algset_id'];
     case_name = map['case_name'];
     case_pic = map['case_pic'];
   }
