@@ -9,6 +9,7 @@ import 'algset.dart';
 class DBHelper {
   static Database _db;
   static String dbName = "database.sqlite";
+  static bool algOrdering = false;
 
   static Future<Database> get db async {
     if (_db != null) return _db;
@@ -20,7 +21,7 @@ class DBHelper {
     var databasesPath = await getDatabasesPath();
     var path = join(databasesPath, dbName);
     var exists = await databaseExists(path);
-    if (!exists || true) {
+    if (!exists) {
       // Should happen only the first time you launch your application
       print("Creating new copy from asset");
 
@@ -71,7 +72,8 @@ class DBHelper {
   Future<List<Alg>> getAlgs(Case case2) async {
     var dbClient = await db;
     List<Map> maps = await dbClient.rawQuery(
-        "SELECT * FROM algs WHERE case_id=? ORDER BY in_use DESC",
+        "SELECT * FROM algs WHERE case_id=?" +
+            (algOrdering ? " ORDER BY in_use DESC" : ""),
         [case2.case_id.toString()]);
     List<Alg> algs = [];
     if (maps.length > 0) {

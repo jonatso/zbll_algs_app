@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'algset.dart';
 import 'cases.dart';
 import 'dbhelper.dart';
+import 'settings.dart';
 
 void main() => runApp(MaterialApp(
       home: ZBLLApp(),
@@ -21,7 +22,7 @@ class _ZBLLAppState extends State<ZBLLApp> {
 
   var tabs = [
     Cases(1),
-    Center(child: Text('Settings page')),
+    SettingsPage(),
   ];
 
   void _onItemTapped(int index) {
