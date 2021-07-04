@@ -113,7 +113,6 @@ class CasePage extends StatefulWidget {
 class _CasePageState extends State<CasePage> {
   final Case case2;
   Future<List<Alg>> algs;
-  String newAlg;
   var newAlgController = TextEditingController();
 
   _CasePageState(this.case2);
@@ -186,7 +185,7 @@ class _CasePageState extends State<CasePage> {
             child: TextField(
               controller: newAlgController,
               decoration: InputDecoration(
-                labelText: "Add a new alg",
+                labelText: "Type in a new algorithm",
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.red, width: 2.0),
                 ),
@@ -197,7 +196,7 @@ class _CasePageState extends State<CasePage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 15.0),
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
@@ -207,15 +206,17 @@ class _CasePageState extends State<CasePage> {
                   ),
                 ),
               ),
-              child: Text(
-                'Add algorithm',
-                style: TextStyle(fontSize: 17.0),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Add algorithm',
+                  style: TextStyle(fontSize: 17.0),
+                ),
               ),
               onPressed: () {
-                newAlg = newAlgController.text;
-                newAlgController.text = "";
                 setState(() {
-                  DBHelper.addAlg(case2, newAlg);
+                  DBHelper.addAlg(case2, newAlgController.text);
+                  newAlgController.text = "";
                   algs = DBHelper().getAlgs(case2); //making the page reload??
                 });
                 Fluttertoast.showToast(
