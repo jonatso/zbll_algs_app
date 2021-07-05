@@ -162,10 +162,9 @@ class _CasePageState extends State<CasePage> {
                                     ? Colors.yellow
                                     : Colors.grey,
                                 onPressed: () {
-                                  DBHelper.setMainAlg(snapshot.data[index]);
                                   setState(() {
+                                    DBHelper.setMainAlg(snapshot.data[index]);
                                     algs = DBHelper().getAlgs(case2);
-                                    //initState();
                                   });
                                   Fluttertoast.showToast(
                                     msg: "You've updated your main algorithm",
@@ -178,8 +177,8 @@ class _CasePageState extends State<CasePage> {
                                 icon: Icon(Icons.delete, size: 36),
                                 color: Colors.red[800],
                                 onPressed: () {
-                                  DBHelper.deleteAlg(snapshot.data[index]);
                                   setState(() {
+                                    DBHelper.deleteAlg(snapshot.data[index]);
                                     algs = DBHelper().getAlgs(case2);
                                   });
                                   Fluttertoast.showToast(

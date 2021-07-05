@@ -97,11 +97,9 @@ class DBHelper {
 
   static void setMainAlg(Alg alg) async {
     var dbClient = await db;
-    await dbClient
-        .rawUpdate("UPDATE algs SET in_use=1 WHERE alg_id=?", [alg.alg_id]);
-
-    await dbClient
-        .rawUpdate("UPDATE algs SET in_use=0 WHERE alg_id!=?", [alg.alg_id]);
+    await dbClient.rawUpdate(
+        "UPDATE algs SET in_use=(CASE alg_id WHEN ? THEN 1 ELSE 0 END)",
+        [alg.alg_id]);
   }
 
   static void deleteAlg(Alg alg) async {

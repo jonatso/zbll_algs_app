@@ -54,7 +54,7 @@ class _ZBLLAppState extends State<ZBLLApp> {
 
                       return DropdownButtonHideUnderline(
                         child: DropdownButton<Algset>(
-                          dropdownColor: Colors.orangeAccent,
+                          dropdownColor: Colors.red[400],
                           iconEnabledColor: Colors.white,
                           value: _chosenSet,
                           items: snapshot.data
